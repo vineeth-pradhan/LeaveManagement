@@ -1,11 +1,11 @@
 # == Table name: employees ==
-# id                         :integer,     not null, primary_key
+# id                         :integer,      not null, primary_key
 # login                      :string(40)   
 # name                       :string(100)
 # email                      :string(100)
 # designation                :string(50)
-# joining_date               :datetime   not null
-# approving_manager_id       :integer(11)    not null
+# joining_date               :datetime      not null
+# approving_manager_id       :integer(11)   not null
 # crypted_password           :string(40)
 # salt                       :string(40)
 # created_at                 :datetime
