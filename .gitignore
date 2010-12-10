@@ -1,3 +1,4 @@
 log/*
 tmp/*
 app/views/*/.tmp*
+s.bat

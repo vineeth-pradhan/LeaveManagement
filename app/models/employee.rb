@@ -1,18 +1,23 @@
-# == Table name: employees ==
-# id                         :integer,      not null, primary_key
-# login                      :string(40)   
-# name                       :string(100)
-# email                      :string(100)
-# designation                :string(50)
-# joining_date               :datetime      not null
-# approving_manager_id       :integer(11)   not null
-# crypted_password           :string(40)
-# salt                       :string(40)
-# created_at                 :datetime
-# updated_at                 :datetime
-# remember_token             :string(40)
-# remember_token_expires_at  :datetime
+# == Schema Info
+# Schema version: 20101207054735
 #
+# Table name: employees
+#
+#  id                        :integer(4)      not null, primary key
+#  approving_manager_id      :integer(4)
+#  crypted_password          :string(40)
+#  designation               :string(50)      not null, default("")
+#  email                     :string(100)
+#  first_name                :string(100)     not null, default("")
+#  joining_date              :datetime        not null
+#  last_name                 :string(100)     not null, default("")
+#  login                     :string(40)      not null, default("")
+#  remember_token            :string(40)
+#  salt                      :string(40)
+#  created_at                :datetime
+#  remember_token_expires_at :datetime
+#  updated_at                :datetime
+
 require 'digest/sha1'
 
 class Employee < ActiveRecord::Base
