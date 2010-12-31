@@ -1,3 +1,4 @@
+
 <h1>Sign up for a new employee</h1>
 <% @employee.password = @employee.password_confirmation = nil %>
 
@@ -22,7 +23,7 @@
 <%= f.text_field :last_name %></p>
 
 <p><%= f.label :designation %><br/>
-<%= f.text_field :designation %></p>
+<%= f.select_field :designation %></p>
 
 <p><%= f.label :joining_date %><br/>
 <%= f.date_select :joining_date %></p>

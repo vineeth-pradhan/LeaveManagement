@@ -9,23 +9,47 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101207054735) do
+ActiveRecord::Schema.define(:version => 20101231055339) do
 
-  create_table "approved_leaves", :force => true do |t|
-    t.integer  "leave_id",    :default => 0, :null => false
-    t.integer  "employee_id", :default => 0, :null => false
+  create_table "applied_offs", :force => true do |t|
+    t.integer  "day_off_id",           :default => 0,  :null => false
+    t.integer  "employee_id",          :default => 0,  :null => false
+    t.string   "applied_leave_status", :default => "", :null => false
+    t.datetime "from_date",                            :null => false
+    t.datetime "to_date",                              :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "day_offs", :force => true do |t|
+    t.string   "leave_policy_id", :limit => 50,                               :default => "",  :null => false
+    t.integer  "employee_id",                                                 :default => 0,   :null => false
+    t.decimal  "casual_offs",                   :precision => 4, :scale => 1, :default => 0.0, :null => false
+    t.decimal  "paid_offs",                     :precision => 4, :scale => 1, :default => 0.0, :null => false
+    t.decimal  "sick_offs",                     :precision => 4, :scale => 1, :default => 0.0, :null => false
+    t.decimal  "earned_offs",                   :precision => 4, :scale => 1, :default => 0.0
+    t.decimal  "maternity_offs",                :precision => 4, :scale => 1, :default => 0.0, :null => false
+    t.integer  "year",                                                        :default => 0,   :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "designations", :force => true do |t|
+    t.string   "designation_type", :limit => 50, :default => "", :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "employees", :force => true do |t|
+    t.string   "employee_code",             :limit => 30,  :default => "", :null => false
     t.string   "login",                     :limit => 40,  :default => "", :null => false
     t.string   "first_name",                :limit => 100, :default => "", :null => false
     t.string   "last_name",                 :limit => 100, :default => "", :null => false
+    t.string   "gender",                    :limit => 1,   :default => "", :null => false
     t.string   "email",                     :limit => 100
-    t.string   "designation",               :limit => 50,  :default => "", :null => false
+    t.integer  "designation_id",                                           :null => false
+    t.integer  "manager_id"
     t.datetime "joining_date",                                             :null => false
-    t.integer  "approving_manager_id"
     t.string   "crypted_password",          :limit => 40
     t.string   "salt",                      :limit => 40
     t.datetime "created_at"
@@ -36,30 +60,10 @@ ActiveRecord::Schema.define(:version => 20101207054735) do
 
   add_index "employees", ["login"], :name => "index_employees_on_login", :unique => true
 
-  create_table "leaves", :force => true do |t|
-    t.string   "leave_type",        :limit => 50, :default => "", :null => false
-    t.integer  "employee_id",                     :default => 0,  :null => false
-    t.integer  "casual_leaves",                   :default => 0,  :null => false
-    t.integer  "privileged_leaves",               :default => 0,  :null => false
-    t.integer  "sick_leaves",                     :default => 0,  :null => false
-    t.integer  "earned_leaves",                   :default => 0,  :null => false
-    t.integer  "year",                            :default => 0,  :null => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "pending_leave_requests", :force => true do |t|
-    t.integer  "leave_id",    :default => 0, :null => false
-    t.integer  "employee_id", :default => 0, :null => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "rejected_leaves", :force => true do |t|
-    t.integer  "leave_id",    :default => 0, :null => false
-    t.integer  "employee_id", :default => 0, :null => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+  create_table "leave_policies", :force => true do |t|
+    t.string  "day_off_type",                               :default => "",  :null => false
+    t.decimal "no_of_days",   :precision => 4, :scale => 1, :default => 0.0, :null => false
+    t.string  "span_type",                                  :default => "",  :null => false
   end
 
 end
