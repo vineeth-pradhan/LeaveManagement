@@ -13,6 +13,7 @@ class CreateEmployees < ActiveRecord::Migration
       #t.integer  :approving_manager_id #FIXME: A LOOPHOLE! Approving managers are also employees, so who should to be existing first in order for this field to be non null?
       t.string   :crypted_password,                 :limit => 40
       t.string   :salt,                             :limit => 40
+      t.boolean  :approving_manager,                                                :default => false
       t.datetime :created_at
       t.datetime :updated_at
       t.string   :remember_token,                   :limit => 40
