@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110103073243) do
+ActiveRecord::Schema.define(:version => 20110104095213) do
 
   create_table "applied_offs", :force => true do |t|
     t.integer  "available_off_id", :default => 0,  :null => false
@@ -61,6 +61,13 @@ ActiveRecord::Schema.define(:version => 20110103073243) do
     t.string  "policy_type",                               :default => "",  :null => false
     t.decimal "no_of_days",  :precision => 4, :scale => 1, :default => 0.0, :null => false
     t.string  "span_type",                                 :default => "",  :null => false
+  end
+
+  create_table "restricted_holidays", :force => true do |t|
+    t.datetime "date",       :default => '2011-01-04 00:00:00', :null => false
+    t.string   "occasion",   :default => "",                    :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
 end

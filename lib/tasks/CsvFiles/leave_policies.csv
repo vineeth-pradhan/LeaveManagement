@@ -1,5 +1,7 @@
 casual,12.0,year
 earned,0.0,month
 maternity,90.0,year
-paid,0.0,year
+lossofpay,0.0,year
 sick,8.0,year
+special,2.0,year
+restricted,2.0,year
