@@ -1,5 +1,5 @@
 class Designation < ActiveRecord::Base
   has_many :employees
   
-  validates_presence_of :designation_type
+  validates_presence_of :type
 end

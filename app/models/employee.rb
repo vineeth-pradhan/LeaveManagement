@@ -24,13 +24,15 @@ class Employee < ActiveRecord::Base
   include Authentication
   include Authentication::ByPassword
   include Authentication::ByCookieToken
+  require "#{RAILS_ROOT}/lib/tasks/loadinitialdata.rb"
 
   belongs_to :designation
   validates_presence_of :designation_id
-  has_many :day_offs
-  has_many :approved_day_offs#, :through => :approving_managers
-  has_many :rejected_day_offs#, :through => :approving_managers
-  has_many :pending_day_off_requests
+  has_many :available_offs, :dependent => :destroy
+  has_many :applied_offs,   :dependent => :destroy
+#  has_many :approved_day_offs#, :through => :approving_managers
+#  has_many :rejected_day_offs#, :through => :approving_managers
+#  has_many :pending_day_off_requests
   belongs_to  :manager, :class_name => 'Employee'
   has_many :associates, :class_name => 'Employee', :foreign_key => 'manager_id'
   
@@ -63,6 +65,10 @@ class Employee < ActiveRecord::Base
 
   def before_save
     self.gender.upcase!
+  end
+  
+  def after_create
+    LoadInitialData.create_available_offs(self)
   end
   # Authenticates a user by their login name and unencrypted password.  Returns the user or nil.
   #
