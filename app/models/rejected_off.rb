@@ -9,6 +9,6 @@
 #  created_at  :datetime
 #  updated_at  :datetime
 
-class RejectedOff < ActiveRecord::Base
-  self.inheritance_column = "applied_leave_status"
+class RejectedOff < AppliedOff
+  self.inheritance_column = "status"
 end
