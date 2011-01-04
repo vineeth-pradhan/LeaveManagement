@@ -1,0 +1,13 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  casual_offs: 9.99
+  sick_offs: 9.99
+  earned_offs: 9.99
+  maternitiy_offs: 9.99
+
+two:
+  casual_offs: 9.99
+  sick_offs: 9.99
+  earned_offs: 9.99
+  maternitiy_offs: 9.99
