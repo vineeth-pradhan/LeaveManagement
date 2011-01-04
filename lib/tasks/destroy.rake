@@ -20,7 +20,7 @@ namespace :destroy do
   desc "Destroys all the leave policies from the database"
   task :day_offs => :environment do
       puts "Destroying all the day_offs for all the employees"
-      DayOff.delete_all
+      AvailableOff.delete_all
   end
   
   desc "Destroys 'desinations', 'employees', 'leave_policies'."
