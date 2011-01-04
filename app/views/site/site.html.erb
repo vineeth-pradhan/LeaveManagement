@@ -1,0 +1,8 @@
+<p><%= @employee.first_name %> <%= @employee.last_name %></p>
+<% for available_off in @employee.available_offs %>
+<p><%= available_off.casual_offs %></p>
+<p><%= available_off.earned_offs %></p>
+<p><%= available_off.maternity_offs %></p>
+<p><%= available_off.sick_offs %></p>
+<p><%= available_off.paid_offs %></p>
+<% end %>

@@ -1,0 +1,29 @@
+<h1>Listing available_offs</h1>
+
+<table>
+  <tr>
+  	<th>Name</th>
+    <th>Casual Leaves</th>
+    <th>Sick Leaves</th>
+    <th>Earned Leaves</th>
+    <th>Maternitiy Leaves</th>
+  </tr>
+
+<% @available_offs.each do |available_off| %>
+  <tr>
+  	<td><%=h available_off.employee.first_name %>
+	<%=h available_off.employee.last_name %></td>
+    <td><%=h available_off.casual_offs %></td>
+    <td><%=h available_off.sick_offs %></td>
+    <td><%=h available_off.earned_offs %></td>
+    <td><%=h available_off.maternity_offs %></td>
+    <td><%= link_to 'Show', available_off %></td>
+    <td><%= link_to 'Edit', edit_available_off_path(available_off) %></td>
+    <td><%= link_to 'Destroy', available_off, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New available_off', new_available_off_path %>

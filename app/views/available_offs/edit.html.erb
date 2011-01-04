@@ -1,0 +1,28 @@
+<h1>Editing available_off</h1>
+
+<% form_for(@available_off) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :casual_offs %><br />
+    <%= f.text_field :casual_offs %>
+  </p>
+  <p>
+    <%= f.label :sick_offs %><br />
+    <%= f.text_field :sick_offs %>
+  </p>
+  <p>
+    <%= f.label :earned_offs %><br />
+    <%= f.text_field :earned_offs %>
+  </p>
+  <p>
+    <%= f.label :maternity_offs %><br />
+    <%= f.text_field :maternity_offs %>
+  </p>
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @available_off %> |
+<%= link_to 'Back', available_offs_path %>

@@ -1,0 +1,20 @@
+<h1>Editing applied_off</h1>
+
+<% form_for(@applied_off) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :from_date %><br />
+    <%= f.datetime_select :from_date %>
+  </p>
+  <p>
+    <%= f.label :to_date %><br />
+    <%= f.datetime_select :to_date %>
+  </p>
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @applied_off %> |
+<%= link_to 'Back', applied_offs_path %>

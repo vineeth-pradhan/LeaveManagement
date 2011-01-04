@@ -1,0 +1,23 @@
+<p>
+  <b>Casual offs:</b>
+  <%=h @available_off.casual_offs %>
+</p>
+
+<p>
+  <b>Sick offs:</b>
+  <%=h @available_off.sick_offs %>
+</p>
+
+<p>
+  <b>Earned offs:</b>
+  <%=h @available_off.earned_offs %>
+</p>
+
+<p>
+  <b>Maternitiy offs:</b>
+  <%=h @available_off.maternity_offs %>
+</p>
+
+
+<%= link_to 'Edit', edit_available_off_path(@available_off) %> |
+<%= link_to 'Back', available_offs_path %>

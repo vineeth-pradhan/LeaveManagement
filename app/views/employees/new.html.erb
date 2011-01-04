@@ -23,7 +23,22 @@
 <%= f.text_field :last_name %></p>
 
 <p><%= f.label :designation %><br/>
-<%= f.select_field :designation %></p>
+<%= f.select :designation_id, find_all_designations.collect{|d|[d.designation_type, d.id]} %></p>
+
+<p><%= f.label :gender %><br/>
+<%= f.radio_button(:gender, :m) %>
+<%= f.label :gender, "Male" %>
+<%= f.radio_button(:gender, :f) %>
+<%= f.label :female, "Female" %></p>
+
+<p><%= f.label :leave_approving_manager %>:
+<%= f.select :manager_id, find_approving_managers.collect{|e|[e.employee_code+" "+e.first_name+" "+e.last_name,e.id]} %></p>
+
+<p><%= f.label :is_approving_manager? %><br/>
+<%= f.radio_button(:approving_manager, true) %>
+<%= f.label :gender, "Yes" %>
+<%= f.radio_button(:approving_manager, false) %>
+<%= f.label :female, "No" %></p>
 
 <p><%= f.label :joining_date %><br/>
 <%= f.date_select :joining_date %></p>

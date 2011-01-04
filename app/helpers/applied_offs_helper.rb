@@ -1,0 +1,2 @@
+module AppliedOffsHelper
+end

@@ -1,0 +1,22 @@
+<h1>Listing applied_offs</h1>
+
+<table>
+  <tr>
+    <th>From date</th>
+    <th>To date</th>
+  </tr>
+
+<% @applied_offs.each do |applied_off| %>
+  <tr>
+    <td><%=h applied_off.from_date %></td>
+    <td><%=h applied_off.to_date %></td>
+    <td><%= link_to 'Show', applied_off %></td>
+    <td><%= link_to 'Edit', edit_applied_off_path(applied_off) %></td>
+    <td><%= link_to 'Destroy', applied_off, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New applied_off', new_applied_off_path %>

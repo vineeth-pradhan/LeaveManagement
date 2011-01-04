@@ -89,5 +89,13 @@ module EmployeesHelper
       link_to_login_with_IP content_text, options
     end
   end
+  
+  def find_approving_managers
+    Employee.find_all_by_approving_manager(true, :order => 'first_name')
+  end
+  
+  def find_all_designations
+    Designation.all(:order => 'designation_type')
+  end
 
 end
