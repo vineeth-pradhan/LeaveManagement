@@ -1,11 +1,21 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :available_offs
+
+  map.resources :applied_offs
+
+  map.resources :designations
+
   map.logout '/logout', :controller => 'sessions', :action => 'destroy'
   map.login '/login', :controller => 'sessions', :action => 'new'
   map.register '/register', :controller => 'employees', :action => 'create'
   map.signup '/signup', :controller => 'employees', :action => 'new'
-  map.resources :employees
+  map.resources :employees do |employee|
+    employee.resources 'available_offs', :only => ['create', 'index', 'show']
+    employee.resources 'applied_offs'
+  end
 
   map.resource :session
+  map.home '/',:controller => 'site', :action => 'site'
 
   # The priority is based upon order of creation: first created -> highest priority.
 
