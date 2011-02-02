@@ -1,8 +1,18 @@
-<p><%= @employee.first_name %> <%= @employee.last_name %></p>
-<% for available_off in @employee.available_offs %>
-<p><%= available_off.casual_offs %></p>
-<p><%= available_off.earned_offs %></p>
-<p><%= available_off.maternity_offs %></p>
-<p><%= available_off.sick_offs %></p>
-<p><%= available_off.paid_offs %></p>
+<p>Check your <%= link_to('Available leaves', employee_available_offs_path(current_employee))%></p>
+<p>Apply for a <%= link_to('leave', new_employee_applied_off_path(current_employee)) %></p>
+<hr />
+
+<p>
+<% if current_employee.approving_manager  %>
+<p>Applied leaves:</p>
+ <table>
+  <% for form in @applied_offs %>
+   <% form_tag(:controller => 'applied_offs', :action => 'update_status',:id => form.id) do %>
+    <div id='show_leaves'>
+     <%= render :partial => 'applied_offs/form', :object => form %>
+    </div> 
+   <% end %>
+  <% end %>
+ </table>
 <% end %>
+</p>

@@ -29,12 +29,14 @@ class AvailableOff < ActiveRecord::Base
   
   validates_presence_of       :year
   validates_numericality_of   :year
-  
+  #validates_numericality_of   :no_of_days, :greater_than => 0#, :unless => Proc.new{|a| a.leave_policy.policy_type == 'lossofpay'}
+
   #TODO: validates_presence_of :restricted_holidays "GOTTA FIGURE OUT HOW THIS HAS TO BE IMPLEMENTED"
   #TODO: validates_presence_of :from_date (These have to be present in the respective leave types)
   #TODO: validates_presence_of :till_date (These have to be present in the respective leave types)
   
-#  def before_create
-#    self.maternity_offs = 0.0 unless self.employee.gender == 'M'
-#  end
+  def restore_leaves(days)
+    self.no_of_days+=days
+    self.save
+  end
 end

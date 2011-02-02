@@ -1,14 +1,15 @@
 class AvailableOffsController < ApplicationController
+  layout 'application'
   # GET /available_offs
   # GET /available_offs.xml
   def index
-    @employee = Employee.find(params[:employee_id])
-    @available_offs = @employee.available_offs.all
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @available_offs }
-    end
+#    @employee = Employee.find(params[:employee_id])
+#    @available_offs = @employee.available_offs.all
+#
+#    respond_to do |format|
+#      format.html # index.html.erb
+#      format.xml  { render :xml => @available_offs }
+#    end
   end
 
   # GET /available_offs/1

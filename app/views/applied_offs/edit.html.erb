@@ -1,6 +1,6 @@
 <h1>Editing applied_off</h1>
 
-<% form_for(@applied_off) do |f| %>
+<% form_for [@employee, @applied_off] do |f| %>
   <%= f.error_messages %>
 
   <p>
@@ -16,5 +16,5 @@
   </p>
 <% end %>
 
-<%= link_to 'Show', @applied_off %> |
-<%= link_to 'Back', applied_offs_path %>
+<%= link_to 'Show', employee_applied_off_path %> |
+<%= link_to 'Back', employee_applied_offs_path %>

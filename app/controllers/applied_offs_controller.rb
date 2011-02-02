@@ -1,7 +1,9 @@
 class AppliedOffsController < ApplicationController
+  layout 'application'
   # GET /applied_offs
   # GET /applied_offs.xml
   def index
+    @employee = current_employee
     @applied_offs = AppliedOff.all
 
     respond_to do |format|
@@ -13,6 +15,7 @@ class AppliedOffsController < ApplicationController
   # GET /applied_offs/1
   # GET /applied_offs/1.xml
   def show
+    @employee = current_employee
     @applied_off = AppliedOff.find(params[:id])
 
     respond_to do |format|
@@ -24,7 +27,8 @@ class AppliedOffsController < ApplicationController
   # GET /applied_offs/new
   # GET /applied_offs/new.xml
   def new
-    @applied_off = AppliedOff.new
+    @employee = current_employee
+    @applied_off = current_employee.applied_offs.build
 
     respond_to do |format|
       format.html # new.html.erb
@@ -34,19 +38,22 @@ class AppliedOffsController < ApplicationController
 
   # GET /applied_offs/1/edit
   def edit
+    @employee = current_employee
     @applied_off = AppliedOff.find(params[:id])
   end
 
   # POST /applied_offs
   # POST /applied_offs.xml
   def create
-    @applied_off = AppliedOff.new(params[:applied_off])
-
+    params[:applied_off][:status] = "pending"
+    @applied_off = current_employee.applied_offs.build(params[:applied_off])
     respond_to do |format|
       if @applied_off.save
-        format.html { redirect_to(@applied_off, :notice => 'AppliedOff was successfully created.') }
-        format.xml  { render :xml => @applied_off, :status => :created, :location => @applied_off }
+        format.html { redirect_to(employee_applied_off_url(@applied_off.employee,@applied_off), :notice => 'AppliedOff was successfully created.') }
+        format.xml  { render :xml => employee_applied_off(@applied_off), :status => :created, :location => @applied_off }
+        format.js
       else
+        #raise 'here'
         format.html { render :action => "new" }
         format.xml  { render :xml => @applied_off.errors, :status => :unprocessable_entity }
       end
@@ -57,7 +64,6 @@ class AppliedOffsController < ApplicationController
   # PUT /applied_offs/1.xml
   def update
     @applied_off = AppliedOff.find(params[:id])
-
     respond_to do |format|
       if @applied_off.update_attributes(params[:applied_off])
         format.html { redirect_to(@applied_off, :notice => 'AppliedOff was successfully updated.') }
@@ -66,6 +72,19 @@ class AppliedOffsController < ApplicationController
         format.html { render :action => "edit" }
         format.xml  { render :xml => @applied_off.errors, :status => :unprocessable_entity }
       end
+    end
+  end
+  
+  def update_status
+    @applied_off = AppliedOff.find(params[:id])
+    if params[:commit] == 'Approve'
+      @applied_off.approve
+    elsif params[:commit] == 'Reject'
+      @applied_off.reject
+    end
+    respond_to do |format|
+      format.html {redirect_to(:controller => 'site', :action => 'site')}
+      format.js
     end
   end
 

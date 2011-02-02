@@ -89,6 +89,9 @@ class Employee < ActiveRecord::Base
   def email=(value)
     write_attribute :email, (value ? value.downcase : nil)
   end
-
+  
+  def full_name
+    self.first_name+" "+self.last_name
+  end
   
 end
