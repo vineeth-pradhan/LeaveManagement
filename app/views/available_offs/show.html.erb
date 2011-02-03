@@ -1,23 +1,24 @@
 <p>
-  <b>Casual offs:</b>
-  <%=h @available_off.casual_offs %>
+  <b>Policy Type:</b>
+  <%=h @available_off.leave_policy.policy_type %>
 </p>
 
 <p>
-  <b>Sick offs:</b>
-  <%=h @available_off.sick_offs %>
+  <b>Full Name:</b>
+  <%=h @available_off.employee.full_name %>
 </p>
 
 <p>
-  <b>Earned offs:</b>
-  <%=h @available_off.earned_offs %>
+  <b>No of days:</b>
+  <%=h @available_off.no_of_days %>
 </p>
 
 <p>
-  <b>Maternitiy offs:</b>
-  <%=h @available_off.maternity_offs %>
+  <b>Year:</b>
+  <%=h @available_off.year %>
 </p>
 
 
-<%= link_to 'Edit', edit_available_off_path(@available_off) %> |
-<%= link_to 'Back', available_offs_path %>
+<%= link_to 'Edit', edit_employee_available_off_path(@employee) %> |
+<%= link_to 'Destroy', employee_available_off_path, :confirm => "Are you sure?", :method => :delete %> |
+<%= link_to 'Back', employee_available_offs_path %>

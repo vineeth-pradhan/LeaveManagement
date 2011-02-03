@@ -36,9 +36,17 @@
 
 <p><%= f.label :is_approving_manager? %><br/>
 <%= f.radio_button(:approving_manager, true) %>
-<%= f.label :gender, "Yes" %>
+<%= f.label :yes, "Yes" %>
 <%= f.radio_button(:approving_manager, false) %>
-<%= f.label :female, "No" %></p>
+<%= f.label :no, "No" %></p>
+
+<p>
+<%= f.label :is_admin? %><br />
+<%= f.radio_button(:is_admin, "true") %>
+<%= f.label :yes %>
+<%= f.radio_button(:is_admin, "false") %>
+<%= f.label :no %>
+</p>
 
 <p><%= f.label :joining_date %><br/>
 <%= f.date_select :joining_date %></p>

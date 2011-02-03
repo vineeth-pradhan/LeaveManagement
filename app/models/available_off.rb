@@ -25,16 +25,17 @@ class AvailableOff < ActiveRecord::Base
   
   has_many :applied_offs
   
-  #belongs_to :applyable, :polymorphic => true(Not a sensible association)
+  #belongs_to :applyable, :polymorphic => true
   
   validates_presence_of       :year
   validates_numericality_of   :year
   #validates_numericality_of   :no_of_days, :greater_than => 0#, :unless => Proc.new{|a| a.leave_policy.policy_type == 'lossofpay'}
 
-  #TODO: validates_presence_of :restricted_holidays "GOTTA FIGURE OUT HOW THIS HAS TO BE IMPLEMENTED"
+  #TODO: validates_presence_of :restricted_holidays
   #TODO: validates_presence_of :from_date (These have to be present in the respective leave types)
-  #TODO: validates_presence_of :till_date (These have to be present in the respective leave types)
-  
+  #TODO: validates_presence_of :to_date (These have to be present in the respective leave types)
+  #TODO: validates_numericality_of :no_of_days
+  #TODO: validates_numericality_of :year
   def restore_leaves(days)
     self.no_of_days+=days
     self.save

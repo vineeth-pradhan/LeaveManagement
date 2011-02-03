@@ -3,13 +3,15 @@ class AvailableOffsController < ApplicationController
   # GET /available_offs
   # GET /available_offs.xml
   def index
-#    @employee = Employee.find(params[:employee_id])
-#    @available_offs = @employee.available_offs.all
-#
-#    respond_to do |format|
-#      format.html # index.html.erb
-#      format.xml  { render :xml => @available_offs }
-#    end
+    @available_offs=current_employee.available_offs
+    if @available_offs
+      respond_to do |format|
+        format.html # index.html.erb
+        format.xml  { render :xml => @available_offs }      
+      end
+    else
+      render :text => "Error"
+    end
   end
 
   # GET /available_offs/1
@@ -36,6 +38,7 @@ class AvailableOffsController < ApplicationController
 
   # GET /available_offs/1/edit
   def edit
+    @employee=Employee.find(params[:employee_id])
     @available_off = AvailableOff.find(params[:id])
   end
 
@@ -62,7 +65,7 @@ class AvailableOffsController < ApplicationController
 
     respond_to do |format|
       if @available_off.update_attributes(params[:available_off])
-        format.html { redirect_to(@available_off, :notice => 'AvailableOff was successfully updated.') }
+        format.html { redirect_to(employee_available_off_url, :notice => 'AvailableOff was successfully updated.') }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
@@ -78,7 +81,7 @@ class AvailableOffsController < ApplicationController
     @available_off.destroy
 
     respond_to do |format|
-      format.html { redirect_to(available_offs_url) }
+      format.html { redirect_to(employee_available_offs_url) }
       format.xml  { head :ok }
     end
   end

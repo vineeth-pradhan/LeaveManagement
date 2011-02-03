@@ -5,7 +5,12 @@
 <p>
 <% if current_employee.approving_manager  %>
 <p>Applied leaves:</p>
- <table>
+ <table cellspacing=21>
+ 	<th>Full name</th>
+	<th>Employee code</th>
+	<th>From date</th>
+	<th>To date</th>
+	<th>No of days</th>
   <% for form in @applied_offs %>
    <% form_tag(:controller => 'applied_offs', :action => 'update_status',:id => form.id) do %>
     <div id='show_leaves'>

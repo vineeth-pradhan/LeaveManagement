@@ -3,6 +3,10 @@ class SiteController < ApplicationController
   
   def site
     @employee = current_employee
-    @applied_offs=AppliedOff.list_all_pending_leaves
+    if @employee.approving_manager?
+      @applied_offs=AppliedOff.list_all_pending_leaves(@employee)
+    else
+      @applied_offs=[]
+    end 
   end
 end

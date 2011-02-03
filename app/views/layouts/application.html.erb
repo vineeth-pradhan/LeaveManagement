@@ -8,9 +8,12 @@
 		<title><%= controller.action_name.capitalize %> : <%= params[:controller].capitalize.singularize %></title>
 	</head>
 	<body>
+		<p id="notice" style="color: green;border:thick;background-color:#90EE90 ;"><%= notice %></p>
+		<p id="alert" style="color: red;border:thick;background-color:#D0D0D0 ;"><%= alert %></p>
 		<% if logged_in? %>
 		<%= link_to('Home', :controller => 'site', :action => 'site') %> | 
-		<%= link_to('Logout', :controller => 'sessions', :action => 'destroy') %>
+		<%= link_to('Logout', :controller => 'sessions', :action => 'destroy') %> |
+		<%= link_to('New employee', :controller => 'employees', :action => 'new') if current_employee.is_admin? %>
 		<hr />
 		<% end %>
 		<%= yield %>

@@ -94,4 +94,11 @@ class Employee < ActiveRecord::Base
     self.first_name+" "+self.last_name
   end
   
+  def approving_manager?
+    self.approving_manager
+  end
+  
+  def is_admin?
+    self.is_admin
+  end
 end
