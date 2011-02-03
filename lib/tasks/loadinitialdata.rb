@@ -10,8 +10,9 @@ module LoadInitialData
            :password              => row[4],
            :password_confirmation => row[4],
            :designation_id        => Designation.find_by_designation_type(row[5]).id,
-           :approving_manager     => true,
-           :joining_date          => row[6])
+           :joining_date          => row[6],
+           :approving_manager     => row[7],
+           :is_admin              => row[8])
          end
     end
     
