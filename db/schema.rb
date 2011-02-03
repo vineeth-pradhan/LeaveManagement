@@ -9,11 +9,11 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110104095213) do
+ActiveRecord::Schema.define(:version => 20110203080714) do
 
   create_table "applied_offs", :force => true do |t|
-    t.integer  "available_off_id", :default => 0,  :null => false
-    t.integer  "employee_id",      :default => 0,  :null => false
+    t.integer  "available_off_id",                 :null => false
+    t.integer  "employee_id",                      :null => false
     t.string   "status",           :default => "", :null => false
     t.datetime "from_date",                        :null => false
     t.datetime "to_date",                          :null => false
@@ -53,6 +53,7 @@ ActiveRecord::Schema.define(:version => 20110104095213) do
     t.datetime "updated_at"
     t.string   "remember_token",            :limit => 40
     t.datetime "remember_token_expires_at"
+    t.boolean  "is_admin",                                 :default => false, :null => false
   end
 
   add_index "employees", ["login"], :name => "index_employees_on_login", :unique => true
