@@ -1,9 +1,17 @@
-<p>Check your <%= link_to('Available leaves', employee_available_offs_path(current_employee))%></p>
-<p>Apply for a <%= link_to('leave', new_employee_applied_off_path(current_employee)) %></p>
+Welcome, <b><%= @employee.full_name %></b>
+<%= link_to(image_tag(@employee.image.public_filename(:small)), employee_image_path(@employee)) if @employee.image%> </p>
+<!-- IMAGE HERE-->
+
+<p>Check your <%= link_to('Available leaves', employee_available_offs_path(@employee))%></p>
+<p>Apply for a <%= link_to('leave', new_employee_applied_off_path(@employee)) %></p>
+
+<!-- UPLOAD IMAGE LINK GOES HERE -->
+
+<p><%= link_to("Upload Avatar",new_employee_image_path(@employee)) %></p>
 <hr />
 
 <p>
-<% if current_employee.approving_manager  %>
+<% if @employee.approving_manager  %>
 <p>Applied leaves:</p>
  <table cellspacing=21>
  	<th>Full name</th>
@@ -20,4 +28,3 @@
   <% end %>
  </table>
 <% end %>
-</p>

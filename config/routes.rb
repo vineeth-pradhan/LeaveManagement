@@ -1,4 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :images
+
 
   map.logout '/logout', :controller => 'sessions', :action => 'destroy'
   map.login '/login', :controller => 'sessions', :action => 'new'
@@ -6,7 +8,8 @@ ActionController::Routing::Routes.draw do |map|
   map.signup '/signup', :controller => 'employees', :action => 'new'
   map.resources :employees do |employee|
     employee.resources 'available_offs'#, :only => ['create', 'index', 'show', 'update']
-    employee.resources 'applied_offs', :collection => 'update_status'#, :only => ['new','create','update'] 
+    employee.resources 'applied_offs', :collection => 'update_status'#, :only => ['new','create','update']
+    employee.resource 'image' 
   end
 
   map.resources :designations

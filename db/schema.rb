@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110203080714) do
+ActiveRecord::Schema.define(:version => 20110203122338) do
 
   create_table "applied_offs", :force => true do |t|
     t.integer  "available_off_id",                 :null => false
@@ -57,6 +57,19 @@ ActiveRecord::Schema.define(:version => 20110203080714) do
   end
 
   add_index "employees", ["login"], :name => "index_employees_on_login", :unique => true
+
+  create_table "images", :force => true do |t|
+    t.integer  "size"
+    t.string   "content_type"
+    t.string   "filename"
+    t.integer  "height"
+    t.integer  "width"
+    t.integer  "parent_id"
+    t.string   "thumbnail"
+    t.integer  "employee_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "leave_policies", :force => true do |t|
     t.string  "policy_type",                               :default => "",  :null => false

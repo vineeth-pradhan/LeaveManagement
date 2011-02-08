@@ -24,6 +24,7 @@ namespace :create do
     puts "Loading all the available leaves for each employee."
     LoadInitialData.load_day_offs
   end
+  
   desc "Creates data for all the tables, namely, 'designations','employees', \
         'leave_policies'."
   task :all => [:designations, :employees, :leave_policies, :day_offs]

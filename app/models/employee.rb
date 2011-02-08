@@ -21,10 +21,20 @@
 require 'digest/sha1'
 
 class Employee < ActiveRecord::Base
+  
+#Constants====================================================================================
+
+  DEFAULT_IMAGE_PATH="public/images/Default.jpg"
+  DEFAULT_IMAGE_MIME_TYPE="image/jpeg"
+
+#Includes & Requires====================================================================================
+
   include Authentication
   include Authentication::ByPassword
   include Authentication::ByCookieToken
   require "#{RAILS_ROOT}/lib/tasks/loadinitialdata.rb"
+
+#Associations ====================================================================================
 
   belongs_to :designation
   validates_presence_of :designation_id
@@ -36,6 +46,10 @@ class Employee < ActiveRecord::Base
   belongs_to  :manager, :class_name => 'Employee'
   has_many :associates, :class_name => 'Employee', :foreign_key => 'manager_id'
   
+  has_one  :image, :dependent => :destroy#, :as => :picture
+
+#Validations =====================================================================================
+
   validates_presence_of     :login
   validates_length_of       :login,    :within => 3..40
   validates_uniqueness_of   :login
@@ -45,8 +59,8 @@ class Employee < ActiveRecord::Base
   #validates_length_of       :name,     :maximum => 100
 
   validates_presence_of     :joining_date
-  
   validates_inclusion_of    :gender, :in => %w(m f)
+  
   #TODO: validates_format_of       :joining_date, :without => /[A-Za-z]*/
   #TODO: validates_inclusion_of    :designation,  :in => %w(AccountsAdmin BusinessAnalyst DeliveryManager FunctionalArchitect HrAssociate HrManager President ProjectCordinator ProjectManager Receptionist SeniorSoftwareEngineer SeniorTestingEngineer SoftwareEngineer SoftwareTrainee SystemAdminLead SystemLead SystemsEngineer SystemsTestEngineer TestLead TestManager TestingEngineer TestingTrainee VicePresident)
 
@@ -56,19 +70,33 @@ class Employee < ActiveRecord::Base
   #validates_format_of       :email,    :with => Authentication.email_regex, :message => Authentication.bad_email_message
 
   
+#Callbacks =====================================================================================
+
+  after_create :create_available_leaves, :create_default_image
 
   # HACK HACK HACK -- how to do attr_accessible from here?
   # prevents a user from submitting a crafted form that bypasses activation
   # anything else you want your user to change should be added here.
   #attr_accessible :login, :first_name, :last_name, :password, :password_confirmation,
   #:designation_id,:approving_manager_id,:joining_date
+    
+#Methods =====================================================================================
 
   def before_save
     self.gender.upcase!
   end
   
-  def after_create
+  def create_available_leaves
     LoadInitialData.create_available_offs(self)
+  end
+  
+  def create_default_image
+    if self.image.nil?
+      require 'action_controller'
+      require 'action_controller/test_process.rb'
+      mimetype="image/jpeg"
+      Image.create(:uploaded_data=>ActionController::TestUploadedFile.new(DEFAULT_IMAGE_PATH,DEFAULT_IMAGE_MIME_TYPE),:employee_id=>self.id)      
+    end
   end
   # Authenticates a user by their login name and unencrypted password.  Returns the user or nil.
   #
@@ -76,11 +104,6 @@ class Employee < ActiveRecord::Base
   # We really need a Dispatch Chain here or something.
   # This will also let us return a human error message.
   #
-  def self.authenticate(login, password)
-    return nil if login.blank? || password.blank?
-    u = find_by_login(login.downcase) # need to get the salt
-    u && u.authenticated?(password) ? u : nil
-  end
 
   def login=(value)
     write_attribute :login, (value ? value.downcase : nil)
@@ -100,5 +123,13 @@ class Employee < ActiveRecord::Base
   
   def is_admin?
     self.is_admin
+  end
+    
+#Class methods =====================================================================================
+
+  def self.authenticate(login, password)
+    return nil if login.blank? || password.blank?
+    u = find_by_login(login.downcase) # need to get the salt
+    u && u.authenticated?(password) ? u : nil
   end
 end
