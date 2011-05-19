@@ -3,14 +3,18 @@ class AvailableOffsController < ApplicationController
   # GET /available_offs
   # GET /available_offs.xml
   def index
-    @available_offs=current_employee.available_offs
+#    @available_offs=AvailableOff.find_by_sql("SELECT * FROM available_offs
+#     WHERE employee_id IN 
+#     (SELECT id FROM employees WHERE id=#{current_employee.id})")
+#    @available_offs=current_employee.available_offs
+    @available_offs=AvailableOff.all(:conditions=>["employee_id=?",current_employee.id], :include => "leave_policy")
     if @available_offs
-      respond_to do |format|
-        format.html # index.html.erb
-        format.xml  { render :xml => @available_offs }      
-      end
+     respond_to do |format|
+      format.html # index.html.erb
+      format.xml  { render :xml => @available_offs }      
+     end
     else
-      render :text => "Error"
+     render :text => "Error"
     end
   end
 
