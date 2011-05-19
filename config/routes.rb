@@ -1,8 +1,5 @@
 LeaveManagement::Application.routes.draw do |map|
   
-  resources :images
-
-
   map.logout '/logout', :controller => 'sessions', :action => 'destroy'
   match "/logout" => "sessions#destroy"
   
@@ -15,17 +12,19 @@ LeaveManagement::Application.routes.draw do |map|
 #  map.signup '/signup', :controller => 'employees', :action => 'new'
    match "/signup" => "employees#new", :as => :signup
 
-  map.resources :employees do
-    resources 'available_offs'#, :only => ['create', 'index', 'show', 'update']
-    resources 'applied_offs', :collection => 'update_status'#, :only => ['new','create','update']
-    resource 'image' 
+  resources :employees do
+    resources :available_offs#, :only => ['create', 'index', 'show', 'update']
+    resources :applied_offs, :collection => 'update_status'#, :only => ['new','create','update']
+#    resource  'image' 
   end
-
+  
+#  resources :images
   resources :designations
   resources :leave_policies
   resource  :session
 #  map.home '/',:controller => 'site', :action => 'site'
-  root :to => "site#site"
+#  root :to => "site#site"
+  match "/site/site" => "site#site"
   
   # The priority is based upon order of creation:
   # first created -> highest priority.
