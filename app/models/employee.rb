@@ -72,7 +72,8 @@ class Employee < ActiveRecord::Base
   
 #Callbacks =====================================================================================
 
-  after_create :create_available_leaves, :create_default_image
+  after_create :create_available_leaves
+#  after_create :create_default_image
 
   # HACK HACK HACK -- how to do attr_accessible from here?
   # prevents a user from submitting a crafted form that bypasses activation
