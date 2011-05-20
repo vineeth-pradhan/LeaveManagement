@@ -1,0 +1,2 @@
+class LeavePoliciesController < ApplicationController
+end
