@@ -1,6 +1,6 @@
-LeaveManagement::Application.routes.draw do |map|
+LeaveManagement::Application.routes.draw do
   
-  map.logout '/logout', :controller => 'sessions', :action => 'destroy'
+#  map.logout '/logout', :controller => 'sessions', :action => 'destroy'
   match "/logout" => "sessions#destroy"
   
 #  map.login '/login', :controller => 'sessions', :action => 'new'
@@ -23,7 +23,7 @@ LeaveManagement::Application.routes.draw do |map|
   resources :leave_policies
   resource  :session
 #  map.home '/',:controller => 'site', :action => 'site'
-#  root :to => "site#site"
+  root :to => "site#site"
   match "/site/site" => "site#site"
   
   # The priority is based upon order of creation:
