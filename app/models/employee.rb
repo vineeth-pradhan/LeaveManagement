@@ -71,7 +71,7 @@ class Employee < ActiveRecord::Base
 
   
 #Callbacks =====================================================================================
-
+  before_save  :upcase_gender
   after_create :create_available_leaves
 #  after_create :create_default_image
 
@@ -83,7 +83,7 @@ class Employee < ActiveRecord::Base
     
 #Methods =====================================================================================
 
-  def before_save
+  def upcase_gender
     self.gender.upcase!
   end
   

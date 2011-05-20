@@ -24,11 +24,14 @@ class AppliedOff < ActiveRecord::Base
   
   attr_reader :no_of_days
   
+  before_save  :check_no_of_leaves
+  after_create :update_leaves
+  
   def from_date_and_to_date_not_to_be_exactly_same
     self.errors.add_to_base("From date and to date cannot be same") if self.from_date == self.to_date
   end
   
-  def before_create
+  def check_no_of_leaves
     #if self.employee.available_offs.find_by_leave_policy_id(self.available_off.leave_policy.id).no_of_days - 1 < 0
     if self.available_off.no_of_days < (get_days_in_number(self.from_date,self.to_date))
       self.errors.add_to_base("You don't have enough leaves left in your account")
@@ -36,7 +39,7 @@ class AppliedOff < ActiveRecord::Base
     end
   end
   
-  def after_create
+  def update_leaves
     update_available_leaves(self)
   end
   
