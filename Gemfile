@@ -32,5 +32,6 @@ gem 'fastercsv', :require => 'fastercsv'
    gem 'cucumber-rails'
    gem 'rspec-rails'
    gem 'webrat'
-   gem 'database-cleaner'
+   gem 'database_cleaner'
+   gem 'capybara'
  end
