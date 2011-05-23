@@ -32,7 +32,7 @@ class Employee < ActiveRecord::Base
   include Authentication
   include Authentication::ByPassword
   include Authentication::ByCookieToken
-  require "#{RAILS_ROOT}/lib/tasks/loadinitialdata.rb"
+  require "#{::Rails.root.to_s}/lib/tasks/loadinitialdata.rb"
 
 #Associations ====================================================================================
 

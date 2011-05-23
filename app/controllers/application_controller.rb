@@ -1,4 +1,4 @@
-require File.join("#{RAILS_ROOT}/lib/authenticated_system.rb")
+require File.join("#{::Rails.root.to_s}/lib/authenticated_system.rb")
 
 class ApplicationController < ActionController::Base
   helper :all # include all helpers, all the time
