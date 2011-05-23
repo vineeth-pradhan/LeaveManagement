@@ -22,7 +22,10 @@ describe "leave_policies/edit.html.erb" do
       form.should have_selector("input",
       :type => "text",
       :name => "leave_policy[no_of_days]",
-      :value => '12')      
+      :value => '12')
+      
+      form.should have_selector("input",
+      :type => "submit")
     end
   end
 end  
