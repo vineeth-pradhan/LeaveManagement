@@ -35,7 +35,10 @@ module LeaveManagement
 
     # Configure the default encoding used in templates for Ruby 1.9.
     config.encoding = "utf-8"
-
+    
+    # Secret tokens and Session store parameters
+    config.secret_token = '9eda9d22a21677eb1f6fe2b020baa3586047ecac702a88607587397b71dd55c8884493e7a37680b93325098be0d2ba819a3de4104971e5d37c28a083946465f4';
+    config.session_store :cookie_store, :key => '_LeaveManagement_session', :secret => '7e5a702a5e702e0da9e351ad76c584663a2ff8f72531e654085b1626b5e7d1e81d5efb07f1dee6eee808354c3117a15f5775d8e8552b180c6789550fc8f4bf94'
     # Configure sensitive parameters which will be filtered from the log file.
     config.filter_parameters += [:password]
   end
