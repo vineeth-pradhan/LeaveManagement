@@ -73,13 +73,13 @@ ActiveRecord::Schema.define(:version => 20110203122338) do
   end
 
   create_table "leave_policies", :force => true do |t|
-    t.string  "policy_type",                               :default => "",  :null => false
-    t.decimal "no_of_days",  :precision => 4, :scale => 1, :default => 0.0, :null => false
-    t.string  "span_type",                                 :default => "",  :null => false
+    t.string  "policy_type",                               :default => "", :null => false
+    t.decimal "no_of_days",  :precision => 4, :scale => 1,                 :null => false
+    t.string  "span_type",                                 :default => "", :null => false
   end
 
   create_table "restricted_holidays", :force => true do |t|
-    t.datetime "date",       :default => '2011-05-18 00:00:00', :null => false
+    t.datetime "date",       :default => '2011-05-24 00:00:00', :null => false
     t.string   "occasion",   :default => "",                    :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
