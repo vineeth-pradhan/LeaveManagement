@@ -24,8 +24,6 @@ class Employee < ActiveRecord::Base
   
 #Constants====================================================================================
 
-  DEFAULT_IMAGE_PATH="public/images/Default.jpg"
-  DEFAULT_IMAGE_MIME_TYPE="image/jpeg"
 
 #Includes & Requires====================================================================================
 
@@ -45,8 +43,6 @@ class Employee < ActiveRecord::Base
 #  has_many :pending_day_off_requests
   belongs_to  :manager, :class_name => 'Employee'
   has_many :associates, :class_name => 'Employee', :foreign_key => 'manager_id'
-  
-  has_one  :image, :dependent => :destroy#, :as => :picture
 
 #Validations =====================================================================================
 
@@ -72,8 +68,6 @@ class Employee < ActiveRecord::Base
   
 #Callbacks =====================================================================================
   before_save  :upcase_gender
-  after_create :create_available_leaves
-#  after_create :create_default_image
 
   # HACK HACK HACK -- how to do attr_accessible from here?
   # prevents a user from submitting a crafted form that bypasses activation
@@ -91,14 +85,6 @@ class Employee < ActiveRecord::Base
     LoadInitialData.create_available_offs(self)
   end
   
-  def create_default_image
-    if self.image.nil?
-      require 'action_controller'
-      require 'action_controller/test_process.rb'
-      mimetype="image/jpeg"
-      Image.create(:uploaded_data=>ActionController::TestUploadedFile.new(DEFAULT_IMAGE_PATH,DEFAULT_IMAGE_MIME_TYPE),:employee_id=>self.id)      
-    end
-  end
   # Authenticates a user by their login name and unencrypted password.  Returns the user or nil.
   #
   # uff.  this is really an authorization, not authentication routine.  

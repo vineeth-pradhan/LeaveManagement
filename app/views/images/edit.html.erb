@@ -1,6 +1,0 @@
-<h1>Editing image</h1>
-<% form_for(@image, :url => employee_image_path(@employee),:html=>{:multipart=>true}) do |f| %> 
-<%= render :partial => 'new_image', :object => f %>
-<% end %>
-<%= link_to 'Show', employee_image_path(@employee) %> |
-<%= link_to 'Back', :back %>
