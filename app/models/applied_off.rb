@@ -73,4 +73,15 @@ class AppliedOff < ActiveRecord::Base
   def no_of_days
     get_days_in_number(self.from_date,self.to_date)
   end
+  
+  def fetch_available_leaves(e)
+    available_offs=AvailableOff.where(["employee_id = ?", e.id]).includes(:leave_policy)
+    available_offs.collect do |i| 
+      if i.leave_policy.policy_type == "Sick/casual"
+        i.leave_policy.policy_type.split("/")
+      else        
+        i.leave_policy.policy_type.capitalize    
+      end
+    end
+  end
 end
