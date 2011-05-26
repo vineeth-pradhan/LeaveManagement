@@ -3,6 +3,7 @@ class AppliedOff < ActiveRecord::Base
   HOURS_PER_DAY=24
   MINUTES_PER_HOUR=60
   SECONDS_PER_MINUTE=60
+  attr_reader :no_of_days
   
   belongs_to :available_off
   validates_presence_of :available_off_id
@@ -22,7 +23,6 @@ class AppliedOff < ActiveRecord::Base
   
   validate :from_date_and_to_date_not_to_be_exactly_same
   
-  attr_reader :no_of_days
   
   before_save  :check_no_of_leaves
   after_create :update_leaves
