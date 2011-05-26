@@ -31,6 +31,12 @@ describe AppliedOff do
       @applied_off.from_date = nil
       @applied_off.should_not be_valid
     end
+    
+    it "is valid when both the from_date and to_date are the same" do
+      @applied_off.from_date = Time.now
+      @applied_off.to_date = @applied_off.from_date
+      @applied_off.should be_valid
+    end
   end  
   
   context "Fetching available leaves" do
@@ -47,7 +53,7 @@ describe AppliedOff do
       @applied_off.fetch_available_leaves(employee).should_not be_empty      
     end
     
-    it "includes 'Earned' leave when the method 'fetch_available_leaves' is called" do
+    it "includes 'Earned', 'Restricted', 'Sick/casual', 'Maternity' leave when the method 'fetch_available_leaves' is called" do
       @applied_off=AppliedOff.new
       @applied_off.fetch_available_leaves(employee).should include("Earned", "Restricted", "Sick/casual", "Maternity")
     end    
