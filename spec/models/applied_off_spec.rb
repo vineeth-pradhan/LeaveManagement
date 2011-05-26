@@ -1,19 +1,55 @@
 require 'spec_helper'
-require 'rake'
+include LoadInitialData
 
 describe AppliedOff do
-  context "Leave Policy" do
-    let(:employee){Employee.first}
-    it "is not empty" do
-      @applied_offs=AppliedOff.new
-      @applied_offs.fetch_available_leaves(employee).should_not be_empty
+  context "AppliedOff Validations" do
+    before(:each) do
+      @applied_off=stub_model(AppliedOff,
+      :id => 1,
+      :available_off_id => 1,
+      :employee_id => 1,
+      :status => "pending",
+      :from_date => Time.now,
+      :to_date => Time.now+1.day)
+    end
+    it "is not valid without available_off_id" do
+      @applied_off.available_off_id = nil
+      @applied_off.should_not be_valid
     end
     
-    context "Retrieve leave policies" do
-      it "fetches all the leave policies" do
-        @applied_offs = AppliedOff.new
-        @applied_offs.fetch_available_leaves(employee).should include("Sick")
-      end
+    it "is not valid without employee_id" do
+      @applied_off.employee_id = nil
+      @applied_off.should_not be_valid
     end
+    
+    it "is not valid without status" do
+      @applied_off.status = nil
+      @applied_off.should_not be_valid
+    end
+    
+    it "is not valid without from_date" do
+      @applied_off.from_date = nil
+      @applied_off.should_not be_valid
+    end
+  end  
+  
+  context "Fetching available leaves" do
+    before(:each) do
+      LoadInitialData.load_all_designations
+      LoadInitialData.load_essential_employees
+      LoadInitialData.load_leave_policies
+      LoadInitialData.load_day_offs
+    end
+    let(:employee){Employee.first}
+    
+    it "is not empty" do
+      @applied_off=AppliedOff.new
+      @applied_off.fetch_available_leaves(employee).should_not be_empty      
+    end
+    
+    it "includes 'Earned' leave when the method 'fetch_available_leaves' is called" do
+      @applied_off=AppliedOff.new
+      @applied_off.fetch_available_leaves(employee).should include("Earned", "Restricted", "Sick/casual", "Maternity")
+    end    
   end
 end
