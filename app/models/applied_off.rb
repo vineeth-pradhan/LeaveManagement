@@ -76,12 +76,8 @@ class AppliedOff < ActiveRecord::Base
   
   def fetch_available_leaves(e)
     available_offs=AvailableOff.where(["employee_id = ?", e.id]).includes(:leave_policy)
-    available_offs.collect do |i| 
-      if i.leave_policy.policy_type == "Sick/casual"
-        i.leave_policy.policy_type.split("/")
-      else        
-        i.leave_policy.policy_type.capitalize    
-      end
+    available_offs.collect do |i|
+      i.leave_policy.policy_type.capitalize
     end
   end
 end
