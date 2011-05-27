@@ -37,7 +37,6 @@ class AvailableOff < ActiveRecord::Base
   #TODO: validates_numericality_of :no_of_days
   #TODO: validates_numericality_of :year
   def restore_leaves(days)
-    self.no_of_days+=days
-    self.save
+    self.update_attribute(:no_of_days, self.no_of_days+=days)
   end
 end
