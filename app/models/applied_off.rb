@@ -26,7 +26,7 @@ class AppliedOff < ActiveRecord::Base
   def from_date_not_to_be_greater_than_to_date 
     if self.from_date > self.to_date    
       self.errors.add_to_base("From date cannot be greater than to date")
-      return false
+#      return false
     end
   end
   
@@ -34,7 +34,7 @@ class AppliedOff < ActiveRecord::Base
     #if self.employee.available_offs.find_by_leave_policy_id(self.available_off.leave_policy.id).no_of_days - 1 < 0
     if self.available_off.no_of_days < self.no_of_days
       self.errors.add_to_base("You don't have enough leaves left in your account")
-      return false
+#      return false
     end
   end
   
