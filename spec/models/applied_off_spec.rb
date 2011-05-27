@@ -2,14 +2,15 @@ require 'spec_helper'
 include LoadInitialData
 
 describe AppliedOff do
-  
-  
+  context "AppliedOff" do
+    before(:each) do
+      LoadInitialData.load_all_designations
+      LoadInitialData.load_essential_employees
+      LoadInitialData.load_leave_policies
+      LoadInitialData.load_day_offs
+    end
     context "validates_presence_of" do
-      before(:each) do      
-        LoadInitialData.load_all_designations
-        LoadInitialData.load_essential_employees
-        LoadInitialData.load_leave_policies
-        LoadInitialData.load_day_offs
+      before(:each) do
         @employee=Employee.first
         @available_off=@employee.available_offs.first
         @applied_off = stub_model(AppliedOff,
@@ -48,14 +49,11 @@ describe AppliedOff do
     end
    
    
-   
-   
-    context "Business logic validation" do
+    context "Business logic" do
+# Refactoring before(:each) wont help. Cuz the validation for from_date will be set to nil in the prev test,
+# and the rest of the validation fails and hence this context will fail too,
+# probably a TODO: Try to figure out how to refactor this. 
       before(:each) do
-        LoadInitialData.load_all_designations
-        LoadInitialData.load_essential_employees
-        LoadInitialData.load_leave_policies
-        LoadInitialData.load_day_offs
         @employee=Employee.first
         @available_off=@employee.available_offs.first
         @applied_off = stub_model(AppliedOff,
@@ -87,27 +85,30 @@ describe AppliedOff do
         @applied_off.to_date = @applied_off.from_date
         @applied_off.no_of_days.should  eq(1)
       end
-    end
-  
-  
-  
-  context "Fetching available leaves" do
-    before(:each) do
-      LoadInitialData.load_all_designations
-      LoadInitialData.load_essential_employees
-      LoadInitialData.load_leave_policies
-      LoadInitialData.load_day_offs
-    end
-    let(:employee){Employee.first}
-    
-    it "is not empty" do
-      @applied_off=AppliedOff.new
-      @applied_off.fetch_available_leaves(employee).should_not be_empty      
+      
+      # Check if the rejection of leaves works appropriately
+      it "rejects leaves appropriately" do
+        expect{@applied_off.reject}.to change(@applied_off, :status).from("pending").to("rejected")
+        expect{@applied_off.reject}.to change(@applied_off.available_off, :no_of_days).by(2)
+      end
+      
+      it "approves leaves appropriately" do
+        expect{@applied_off.approve}.to change(@applied_off, :status).from("pending").to("approved")
+      end
     end
     
-    it "includes 'Earned', 'Restricted', 'Sick/casual', 'Maternity' leave when the method 'fetch_available_leaves' is called" do
-      @applied_off=AppliedOff.new
-      @applied_off.fetch_available_leaves(employee).should include("Earned", "Restricted", "Sick/casual", "Maternity")
-    end    
+    context "Fetching available leaves" do
+      let(:employee){Employee.first}
+    
+      it "is not empty" do
+        @applied_off=AppliedOff.new
+        @applied_off.fetch_available_leaves(employee).should_not be_empty      
+      end
+    
+      it "includes 'Earned', 'Restricted', 'Sick/casual', 'Maternity' leave when the method 'fetch_available_leaves' is called" do
+        @applied_off=AppliedOff.new
+        @applied_off.fetch_available_leaves(employee).should include("Earned", "Restricted", "Sick/casual", "Maternity")
+      end    
+    end
   end
 end
