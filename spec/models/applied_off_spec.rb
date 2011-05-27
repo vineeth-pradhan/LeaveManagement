@@ -50,8 +50,8 @@ describe AppliedOff do
    
    
    
-     context "Business logic validation" do
-       before(:each) do
+    context "Business logic validation" do
+      before(:each) do
         LoadInitialData.load_all_designations
         LoadInitialData.load_essential_employees
         LoadInitialData.load_leave_policies
@@ -76,7 +76,6 @@ describe AppliedOff do
       
       # When from_date and to_date are the same, it should be valid
       it "is valid when both the from_date and to_date are the same" do
-        pending
         @applied_off.from_date = Time.now
         @applied_off.to_date = @applied_off.from_date
         @applied_off.should be_valid
@@ -86,15 +85,8 @@ describe AppliedOff do
       it "returns appropriate number of days of leave applied when to_date is subtracted from  from_date" do
         @applied_off.from_date = Time.now
         @applied_off.to_date = @applied_off.from_date
-        @applied_off.get_days_in_number(@applied_off.from_date, @applied_off.to_date).should == 1
+        @applied_off.no_of_days.should  eq(1)
       end
-      
-      # Check if check_no_of_leaves works correctly
-      it "does not raise an error after checking the number of days of leave available is valid" do
-        pending
-        @applied_off.from_date = Time.now
-        @applied_off.to_date = @applied_off.from_date + 1.day.from_now
-      end 
     end
   
   
