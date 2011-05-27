@@ -7,13 +7,10 @@ class AppliedOff < ActiveRecord::Base
   
   belongs_to :available_off
   validates_presence_of :available_off_id
-  validates_associated :available_off
+#  validates_associated :available_off
   
   belongs_to :employee
   validates_presence_of :employee_id
-  
-#  belongs_to :leave_policy
-#  validates_presence_of :leave_policy_id
   
   validates_presence_of :status
   validates_presence_of :from_date
@@ -21,14 +18,16 @@ class AppliedOff < ActiveRecord::Base
   
   validates_inclusion_of :status, :in => %w(pending rejected approved)
   
-  validate :from_date_and_to_date_not_to_be_exactly_same
-  
+  validate :from_date_not_to_be_greater_than_to_date, :unless => Proc.new{self.from_date.nil? || self.to_date.nil?}
   
   before_save  :check_no_of_leaves
   after_create :update_leaves
   
-  def from_date_and_to_date_not_to_be_exactly_same
-    self.errors.add_to_base("From date and to date cannot be same") if self.from_date == self.to_date
+  def from_date_not_to_be_greater_than_to_date 
+    if self.from_date > self.to_date    
+      self.errors.add_to_base("From date cannot be greater than to date")
+      return false
+    end
   end
   
   def check_no_of_leaves
@@ -61,7 +60,7 @@ class AppliedOff < ActiveRecord::Base
   end
   
   def get_days_in_number(from_date,to_date)
-    (to_date-from_date)/(HOURS_PER_DAY * MINUTES_PER_HOUR * SECONDS_PER_MINUTE)
+    (to_date-from_date)/(HOURS_PER_DAY * MINUTES_PER_HOUR * SECONDS_PER_MINUTE) + 1
   end
   
   def reject
