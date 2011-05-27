@@ -64,9 +64,8 @@ class AppliedOff < ActiveRecord::Base
   end
   
   def reject
-    self.update_attributes(:status => 'rejected')
-    number=get_days_in_number(self.from_date,self.to_date)
-    self.available_off.restore_leaves(number)
+    self.update_attribute(:status, 'rejected')
+    self.available_off.restore_leaves(self.no_of_days)
   end
   
   def no_of_days
