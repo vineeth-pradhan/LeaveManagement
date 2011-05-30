@@ -34,7 +34,7 @@ class AppliedOff < ActiveRecord::Base
     #if self.employee.available_offs.find_by_leave_policy_id(self.available_off.leave_policy.id).no_of_days - 1 < 0
     if self.available_off.no_of_days < self.no_of_days
       self.errors.add_to_base("You don't have enough leaves left in your account")
-#      return false
+      return false
     end
   end
   
@@ -75,7 +75,7 @@ class AppliedOff < ActiveRecord::Base
   def fetch_available_leaves(e)
     available_offs=AvailableOff.where(["employee_id = ?", e.id]).includes(:leave_policy)
     available_offs.collect do |i|
-      i.leave_policy.policy_type.capitalize
+      [i.leave_policy.policy_type.capitalize, i.id]
     end
   end
 end
