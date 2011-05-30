@@ -121,10 +121,16 @@ describe AppliedOff do
         @applied_off.fetch_available_leaves(employee).should_not be_empty      
       end
     
-      it "includes 'Earned', 'Restricted', 'Sick/casual', 'Maternity' leave when the method 'fetch_available_leaves' is called" do
+      it "includes 'Earned', 'Restricted', 'Sick/casual' leave when the method 'fetch_available_leaves' is called" do
         @applied_off=AppliedOff.new
-        @applied_off.fetch_available_leaves(employee).should include(["Earned", 2], ["Restricted", 4], ["Sick/casual", 1], ["Maternity", 3])
-      end    
+        @applied_off.fetch_available_leaves(employee).should include(["EARNED", 2], ["RESTRICTED", 3], ["SICK/CASUAL", 1])
+      end
+      
+      it "does not include the maternity leave if the employee is a male" do
+        @applied_off=AppliedOff.new
+        employee.stub(:gender).and_return "M"
+        @applied_off.fetch_available_leaves(employee).should_not include(["MATERNITY", 3])
+      end
     end
   end
 end
