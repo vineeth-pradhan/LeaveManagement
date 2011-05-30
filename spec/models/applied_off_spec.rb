@@ -88,13 +88,9 @@ describe AppliedOff do
       it "is not valid when the no of days of leave applied is greater than the available leaves for an employee" do
         @applied_off.stub(:no_of_days).and_return 1
         @applied_off.available_off.stub(:no_of_days).and_return 0
-        @applied_off.check_no_of_leaves.should include("You don't have enough leaves left in your account")
+        @applied_off.check_no_of_leaves.should == false
       end
-      
-      it "updates the leaves after approving the applied_off" do
-        
-      end
-      
+            
       # Check if the method get_days_in_number is working correctly
       it "returns appropriate number of days of leave applied when to_date is subtracted from  from_date" do
         @applied_off.from_date = Time.now
@@ -127,7 +123,7 @@ describe AppliedOff do
     
       it "includes 'Earned', 'Restricted', 'Sick/casual', 'Maternity' leave when the method 'fetch_available_leaves' is called" do
         @applied_off=AppliedOff.new
-        @applied_off.fetch_available_leaves(employee).should include("Earned", "Restricted", "Sick/casual", "Maternity")
+        @applied_off.fetch_available_leaves(employee).should include(["Earned", 2], ["Restricted", 4], ["Sick/casual", 1], ["Maternity", 3])
       end    
     end
   end
