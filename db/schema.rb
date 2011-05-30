@@ -79,8 +79,8 @@ ActiveRecord::Schema.define(:version => 20110203122338) do
   end
 
   create_table "restricted_holidays", :force => true do |t|
-    t.datetime "date",       :default => '2011-05-25 00:00:00', :null => false
-    t.string   "occasion",   :default => "",                    :null => false
+    t.date     "rdate",      :null => false
+    t.string   "occasion",   :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
