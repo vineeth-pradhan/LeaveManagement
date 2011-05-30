@@ -6,3 +6,4 @@ public/images/employees/*
 public/images/Default*
 public/images/Thumbs.db
 .rspec
+db/*.sqlite3
