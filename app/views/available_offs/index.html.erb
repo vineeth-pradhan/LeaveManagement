@@ -1,4 +1,4 @@
 <p><%= current_employee.first_name %> <%= current_employee.last_name %></p>
 <% for available_off in @available_offs %>
-<%= available_off.leave_policy.policy_type.capitalize %>: <%= available_off.no_of_days %> <br />
+<%= available_off.leave_policy.policy_type %>: <%= available_off.no_of_days %> <br />
 <% end %>
