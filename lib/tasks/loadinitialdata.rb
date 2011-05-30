@@ -41,7 +41,7 @@ module LoadInitialData
     
  def self.create_available_offs(e)
   LeavePolicy.all.each do |p| 
-   next if e.gender == 'M' && p.policy_type == 'maternity'
+   next if e.gender == 'M' && p.policy_type == 'MATERNITY'
     AvailableOff.create!(
     :leave_policy_id => p.id,
     :employee_id  => e.id,
