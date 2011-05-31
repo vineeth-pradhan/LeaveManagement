@@ -25,8 +25,14 @@ namespace :create do
     LoadInitialData.load_day_offs
   end
   
+  desc "Loads up restricted holidays"
+  task :restricted_holidays => :environment do
+    puts "Loading all the restricted holidays"
+    LoadInitialData.load_restricted_holidays
+  end
+  
   desc "Creates data for all the tables, namely, 'designations','employees', \
         'leave_policies'."
-  task :all => [:designations, :employees, :leave_policies, :day_offs]
+  task :all => [:designations, :employees, :leave_policies, :day_offs, :restricted_holidays]
   
 end

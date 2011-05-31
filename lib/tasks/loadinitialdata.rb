@@ -49,12 +49,11 @@ module LoadInitialData
   end
  end
 
- def self.create_restricted_holiday
+ def self.load_restricted_holidays
   CSV.foreach("#{::Rails.root.to_s}/lib/tasks/CsvFiles/restricted_holiday.csv") do |row|     
-   RestrictedHoliday.create(
+   RestrictedHoliday.create!(
    :rdate => row[0],
-   :ocassion => row[1])
+   :occasion => row[1])
   end
  end
-
 end
