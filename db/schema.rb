@@ -10,16 +10,17 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110203122338) do
+ActiveRecord::Schema.define(:version => 20110530105331) do
 
   create_table "applied_offs", :force => true do |t|
-    t.integer  "available_off_id",                 :null => false
-    t.integer  "employee_id",                      :null => false
-    t.string   "status",           :default => "", :null => false
-    t.datetime "from_date",                        :null => false
-    t.datetime "to_date",                          :null => false
+    t.integer  "available_off_id",                      :null => false
+    t.integer  "employee_id",                           :null => false
+    t.string   "status",                :default => "", :null => false
+    t.datetime "from_date",                             :null => false
+    t.datetime "to_date",                               :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "restricted_holiday_id"
   end
 
   create_table "available_offs", :force => true do |t|
