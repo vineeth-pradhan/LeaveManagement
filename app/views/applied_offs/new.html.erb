@@ -4,8 +4,10 @@
 <%= f.error_messages %>
 
   <p>
-   <%= f.label :leave_type %><br />
-   <%= f.select :available_off_id, @applied_off.fetch_available_leaves(@current_employee) %>
+   <% for available_off in @applied_off.fetch_available_leaves(@current_employee) %>   
+   <%= f.radio_button :available_off_id, available_off[1], {:id => "applied_off_available_off_#{available_off[0]}"} %>
+   <%= f.label available_off[0] %><br />
+   <%end%>
   </p>
   <p>
     <%= f.label :from_date %><br />
@@ -14,6 +16,10 @@
   <p>
     <%= f.label :to_date %><br />
     <%= f.datetime_select :to_date %>
+  </p>
+  <p>
+  	<%= f.label :restricted_holiday %>
+	<%= f.select :restricted_holiday_id, RestrictedHoliday.all.collect{|c| ["#{c.occasion} On "+"#{c.rdate}", c.id]}, :include_blank => true %>
   </p>
   <p>
     <%= submit_tag 'Create' %>
