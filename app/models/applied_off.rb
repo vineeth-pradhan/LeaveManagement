@@ -12,6 +12,8 @@ class AppliedOff < ActiveRecord::Base
   belongs_to :employee
   validates_presence_of :employee_id
   
+  belongs_to :restricted_holiday
+  
   validates_presence_of :status
   validates_presence_of :from_date
   validates_presence_of :to_date
