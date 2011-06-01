@@ -29,6 +29,9 @@ gem 'fastercsv', :require => 'fastercsv'
 # put test-only gems in this group so their generators
 # and rake tasks are available in development mode:
  group :development, :test do
+   gem 'pdf-reader', :require => 'pdf/reader'
+   gem 'Ascii85', :require => 'ascii85'
+   gem 'prawn'
    gem 'cucumber-rails'
    gem 'rspec-rails'
    gem 'webrat'
