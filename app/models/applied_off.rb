@@ -21,7 +21,7 @@ class AppliedOff < ActiveRecord::Base
   validate :from_date_not_to_be_greater_than_to_date, :unless => Proc.new{self.from_date.nil? || self.to_date.nil?}
   
   before_save  :check_no_of_leaves
-  after_create :update_leaves
+#  after_create :update_leaves
   
   def from_date_not_to_be_greater_than_to_date 
     if self.from_date > self.to_date    
@@ -57,6 +57,7 @@ class AppliedOff < ActiveRecord::Base
   
   def approve
     self.update_attributes(:status => 'approved')
+    self.available_off.deduct_leaves(self.no_of_days)
   end
   
   def get_days_in_number(from_date,to_date)
@@ -65,7 +66,7 @@ class AppliedOff < ActiveRecord::Base
   
   def reject
     self.update_attribute(:status, 'rejected')
-    self.available_off.restore_leaves(self.no_of_days)
+#    self.available_off.restore_leaves(self.no_of_days)
   end
   
   def no_of_days
