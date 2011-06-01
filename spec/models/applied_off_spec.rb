@@ -99,13 +99,15 @@ describe AppliedOff do
       end
       
       # Check if the rejection of leaves works appropriately
-      it "rejects leaves appropriately" do
+      it "updates the status to 'rejected' and the available_leaves remains unchanged" do
         expect{@applied_off.reject}.to change(@applied_off, :status).from("pending").to("rejected")
-        expect{@applied_off.reject}.to change(@applied_off.available_off, :no_of_days).by(2)
+        expect{@applied_off.reject}.to change(@applied_off.available_off, :no_of_days).by(0)
       end
+      
       # Check if the approval of leaves works appropriately
-      it "approves leaves appropriately" do
+      it "updates the status to 'approved' and the available_leaves will reduce by 2" do
         expect{@applied_off.approve}.to change(@applied_off, :status).from("pending").to("approved")
+        expect{@applied_off.approve}.to change(@applied_off.available_off, :no_of_days).by(-2)
       end
     end
     
