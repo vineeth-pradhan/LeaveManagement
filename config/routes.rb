@@ -87,7 +87,10 @@ LeaveManagement::Application.routes.draw do
    resource  :session, :only => ['new', 'create', 'destroy']
    resources :designations
    resources :leave_policies
-   resources :employees, :only => ['new', 'create'] do     
+   resources :employees do
+     member do
+       get 'doc_report'
+     end
      resources :applied_offs
      resources :available_offs
    end
