@@ -36,7 +36,11 @@ class AvailableOff < ActiveRecord::Base
   #TODO: validates_presence_of :to_date (These have to be present in the respective leave types)
   #TODO: validates_numericality_of :no_of_days
   #TODO: validates_numericality_of :year
-  def restore_leaves(days)
-    self.update_attribute(:no_of_days, self.no_of_days+=days)
+#  def restore_leaves(days)
+#    self.update_attribute(:no_of_days, self.no_of_days += days)
+#  end
+  
+  def deduct_leaves(days)
+    self.update_attribute(:no_of_days, self.no_of_days -= days)
   end
 end
