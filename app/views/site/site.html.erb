@@ -2,6 +2,9 @@ Welcome, <b><%= @employee.full_name %></b>
 
 <p>Check your <%= link_to('Available leaves', employee_available_offs_path(@employee))%></p>
 <p>Apply for a <%= link_to('leave', new_employee_applied_off_path(@employee)) %></p>
+<% if @employee.is_hr? %>
+<br /><%= link_to("Employees List", employees_path) %>
+<% end %>
 
 <hr />
 
