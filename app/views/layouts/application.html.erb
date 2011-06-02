@@ -9,9 +9,9 @@
 <body>
 	
 	<%= image_tag("login_top_new.jpg", {:size =>"750x50", :id => "idexcel_header_image"}) %><br /><hr />
-	
+<p id="notice" style="color: green;border:thick;background-color:#90EE90 ;"><%= notice %></p>	
 <% if logged_in? %>	
-<%= link_to("Home", :controller => "site", :action => "site") %> | <%= link_to("Logout",session_path, :method => :destroy)%>
+<%= link_to("Home", :controller => "site", :action => "site") %> | <%= link_to("Logout",session_path, :method => :delete)%>
 <hr />
 <% end %>
 <%= yield %>
