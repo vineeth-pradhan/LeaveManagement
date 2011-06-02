@@ -1,5 +1,5 @@
-<h1>Log In</h1>
-
+<div id="login_form">
+<h1>Log In</h1>	
 <% form_tag session_path do -%>
 <p><%= label_tag 'login' %><br />
 <%= text_field_tag 'login', @login %></p>
@@ -14,3 +14,4 @@
 
 <p><%= submit_tag 'Log in' %></p>
 <% end -%>
+</div>
