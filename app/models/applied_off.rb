@@ -19,8 +19,8 @@ class AppliedOff < ActiveRecord::Base
   validates_inclusion_of :status, :in => %w(pending rejected approved)
   
   validate :from_date_not_to_be_greater_than_to_date, :unless => Proc.new{self.from_date.nil? || self.to_date.nil?}
-  
-  before_save  :check_no_of_leaves
+
+  before_create  :check_no_of_leaves
 #  after_create :update_leaves
   
   def from_date_not_to_be_greater_than_to_date 
