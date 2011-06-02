@@ -49,7 +49,7 @@ class AppliedOffsController < ApplicationController
     @applied_off = current_employee.applied_offs.build(params[:applied_off])
     respond_to do |format|
       if @applied_off.save
-        format.html { redirect_to(employee_applied_off_url(@applied_off.employee,@applied_off), :notice => 'AppliedOff was successfully created.') }
+        format.html { redirect_to(employee_applied_off_url(@applied_off.employee,@applied_off), :notice => 'Your leave is awaiting approval.') }
         format.xml  { render :xml => employee_applied_off(@applied_off), :status => :created, :location => @applied_off }
         format.js
       else
