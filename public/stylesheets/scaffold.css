@@ -52,3 +52,15 @@ a:hover { color: #fff; background-color:#000; }
   list-style: square;
 }
 
+#login_form{
+  border:solid;
+  margin-left:350px;
+  margin-right:500px;
+  margin-top:100px;
+  padding-left: 100px; 
+  padding-right: 10px;
+}
+
+#idexcel_header_image{
+
+}
