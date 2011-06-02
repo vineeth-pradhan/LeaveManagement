@@ -7,7 +7,10 @@
   <%= csrf_meta_tag %>
 </head>
 <body>
-<% if logged_in? %>
+	
+	<%= image_tag("login_top_new.jpg", {:size =>"750x50", :id => "idexcel_header_image"}) %><br /><hr />
+	
+<% if logged_in? %>	
 <%= link_to("Home", :controller => "site", :action => "site") %> | <%= link_to("Logout",session_path, :method => :destroy)%>
 <hr />
 <% end %>
