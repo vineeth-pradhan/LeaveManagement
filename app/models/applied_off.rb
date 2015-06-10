@@ -3,16 +3,14 @@ class AppliedOff < ActiveRecord::Base
   HOURS_PER_DAY=24
   MINUTES_PER_HOUR=60
   SECONDS_PER_MINUTE=60
+  attr_reader :no_of_days
   
   belongs_to :available_off
   validates_presence_of :available_off_id
-  validates_associated :available_off
+#  validates_associated :available_off
   
   belongs_to :employee
   validates_presence_of :employee_id
-  
-#  belongs_to :leave_policy
-#  validates_presence_of :leave_policy_id
   
   validates_presence_of :status
   validates_presence_of :from_date
@@ -20,23 +18,27 @@ class AppliedOff < ActiveRecord::Base
   
   validates_inclusion_of :status, :in => %w(pending rejected approved)
   
-  validate :from_date_and_to_date_not_to_be_exactly_same
+  validate :from_date_not_to_be_greater_than_to_date, :unless => Proc.new{self.from_date.nil? || self.to_date.nil?}
   
-  attr_reader :no_of_days
+  before_save  :check_no_of_leaves
+#  after_create :update_leaves
   
-  def from_date_and_to_date_not_to_be_exactly_same
-    self.errors.add_to_base("From date and to date cannot be same") if self.from_date == self.to_date
+  def from_date_not_to_be_greater_than_to_date 
+    if self.from_date > self.to_date    
+      self.errors.add_to_base("From date cannot be greater than to date")
+#      return false
+    end
   end
   
-  def before_create
+  def check_no_of_leaves
     #if self.employee.available_offs.find_by_leave_policy_id(self.available_off.leave_policy.id).no_of_days - 1 < 0
-    if self.available_off.no_of_days < (get_days_in_number(self.from_date,self.to_date))
+    if self.available_off.no_of_days < self.no_of_days
       self.errors.add_to_base("You don't have enough leaves left in your account")
       return false
     end
   end
   
-  def after_create
+  def update_leaves
     update_available_leaves(self)
   end
   
@@ -55,19 +57,26 @@ class AppliedOff < ActiveRecord::Base
   
   def approve
     self.update_attributes(:status => 'approved')
+    self.available_off.deduct_leaves(self.no_of_days)
   end
   
   def get_days_in_number(from_date,to_date)
-    (to_date-from_date)/(HOURS_PER_DAY * MINUTES_PER_HOUR * SECONDS_PER_MINUTE)
+    (to_date-from_date)/(HOURS_PER_DAY * MINUTES_PER_HOUR * SECONDS_PER_MINUTE) + 1
   end
   
   def reject
-    self.update_attributes(:status => 'rejected')
-    number=get_days_in_number(self.from_date,self.to_date)
-    self.available_off.restore_leaves(number)
+    self.update_attribute(:status, 'rejected')
+#    self.available_off.restore_leaves(self.no_of_days)
   end
   
   def no_of_days
     get_days_in_number(self.from_date,self.to_date)
+  end
+  
+  def fetch_available_leaves(e)
+    available_offs=AvailableOff.where(["employee_id = ?", e.id]).includes(:leave_policy)
+    available_offs.collect do |i|
+      [i.leave_policy.policy_type, i.id]
+    end
   end
 end

@@ -1,0 +1,4 @@
+<% for leave_policy in @leave_policies %>
+<%= leave_policy.policy_type %><%= link_to("Edit", edit_leave_policy_path(leave_policy)) %> |
+<%= link_to("Destroy", leave_policy_path(leave_policy), :method => :delete) %>
+<% end %>

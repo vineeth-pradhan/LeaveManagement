@@ -27,8 +27,8 @@ class AppliedOffsController < ApplicationController
   # GET /applied_offs/new
   # GET /applied_offs/new.xml
   def new
-    @employee = current_employee
-    @applied_off = current_employee.applied_offs.build
+    @current_employee = current_employee
+    @applied_off = @current_employee.applied_offs.build
 
     respond_to do |format|
       format.html # new.html.erb

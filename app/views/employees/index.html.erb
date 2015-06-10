@@ -1,0 +1,13 @@
+<table border="1">
+	<th>Full Name</th>
+	<th>Designation</th>
+<% for employee in @employees %>
+<tr>	
+  <td><%= employee.full_name %></td> 
+  <td><%= employee.designation.designation_type %></td> 
+  
+  
+  <td><%= link_to("Show", employee_path(employee))%></td>
+</tr>
+<% end %>
+</table>

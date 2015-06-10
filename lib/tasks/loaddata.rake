@@ -1,4 +1,4 @@
-require "#{RAILS_ROOT}/lib/tasks/loadinitialdata.rb"
+require "#{::Rails.root.to_s}/lib/tasks/loadinitialdata.rb"
 namespace :create do
   desc "Creates all the designations."
   task :designations => :environment do

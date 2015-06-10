@@ -1,38 +1,16 @@
-# == Schema Info
-# Schema version: 20101207054735
-#
-# Table name: employees
-#
-#  id                        :integer(4)      not null, primary key
-#  approving_manager_id      :integer(4)
-#  crypted_password          :string(40)
-#  designation               :string(50)      not null, default("")
-#  email                     :string(100)
-#  first_name                :string(100)     not null, default("")
-#  joining_date              :datetime        not null
-#  last_name                 :string(100)     not null, default("")
-#  login                     :string(40)      not null, default("")
-#  remember_token            :string(40)
-#  salt                      :string(40)
-#  created_at                :datetime
-#  remember_token_expires_at :datetime
-#  updated_at                :datetime
-
 require 'digest/sha1'
 
 class Employee < ActiveRecord::Base
   
 #Constants====================================================================================
 
-  DEFAULT_IMAGE_PATH="public/images/Default.jpg"
-  DEFAULT_IMAGE_MIME_TYPE="image/jpeg"
 
 #Includes & Requires====================================================================================
 
   include Authentication
   include Authentication::ByPassword
   include Authentication::ByCookieToken
-  require "#{RAILS_ROOT}/lib/tasks/loadinitialdata.rb"
+  require "#{::Rails.root.to_s}/lib/tasks/loadinitialdata.rb"
 
 #Associations ====================================================================================
 
@@ -45,8 +23,6 @@ class Employee < ActiveRecord::Base
 #  has_many :pending_day_off_requests
   belongs_to  :manager, :class_name => 'Employee'
   has_many :associates, :class_name => 'Employee', :foreign_key => 'manager_id'
-  
-  has_one  :image, :dependent => :destroy#, :as => :picture
 
 #Validations =====================================================================================
 
@@ -71,8 +47,8 @@ class Employee < ActiveRecord::Base
 
   
 #Callbacks =====================================================================================
-
-  after_create :create_available_leaves, :create_default_image
+  before_save  :upcase_gender
+  after_create :create_available_leaves
 
   # HACK HACK HACK -- how to do attr_accessible from here?
   # prevents a user from submitting a crafted form that bypasses activation
@@ -82,7 +58,7 @@ class Employee < ActiveRecord::Base
     
 #Methods =====================================================================================
 
-  def before_save
+  def upcase_gender
     self.gender.upcase!
   end
   
@@ -90,14 +66,6 @@ class Employee < ActiveRecord::Base
     LoadInitialData.create_available_offs(self)
   end
   
-  def create_default_image
-    if self.image.nil?
-      require 'action_controller'
-      require 'action_controller/test_process.rb'
-      mimetype="image/jpeg"
-      Image.create(:uploaded_data=>ActionController::TestUploadedFile.new(DEFAULT_IMAGE_PATH,DEFAULT_IMAGE_MIME_TYPE),:employee_id=>self.id)      
-    end
-  end
   # Authenticates a user by their login name and unencrypted password.  Returns the user or nil.
   #
   # uff.  this is really an authorization, not authentication routine.  
@@ -123,6 +91,10 @@ class Employee < ActiveRecord::Base
   
   def is_admin?
     self.is_admin
+  end
+  
+  def is_hr?
+    Designation::REPORT_GENERATORS.include?(self.designation.designation_type)
   end
     
 #Class methods =====================================================================================

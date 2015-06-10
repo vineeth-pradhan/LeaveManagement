@@ -1,0 +1,7 @@
+log/*
+tmp/*
+app/views/*/.tmp*
+s.bat
+public/images/employees/*
+public/images/Default*
+public/images/Thumbs.db

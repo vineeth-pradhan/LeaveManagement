@@ -4,6 +4,32 @@ class EmployeesController < ApplicationController
   
   before_filter :login_required
 
+  def index
+    @employees = Employee.all
+    respond_to do |format|
+      format.html
+      format.pdf{render :layout => false}
+    end
+  end
+  
+  def show
+    @employee = Employee.find(params[:id])
+    if @employee
+      respond_to do |format|
+        format.html
+      end
+    end
+  end
+  
+  def doc_report
+    @employee = Employee.where(["id = ?",params[:id]])
+    if @available_offs
+      respond_to do |format|
+        format.pdf{render :layout => false}
+      end
+    end
+  end
+  
   # render new.rhtml
   def new
     @employee = Employee.new

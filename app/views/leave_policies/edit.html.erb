@@ -1,0 +1,9 @@
+<%= form_for(:leave_policy, :url => leave_policy_path(@leave_policy), :html => {:method => :put}) do |f|%>
+  <%= f.label :policy_type %>
+  <%= f.text_field :policy_type %>
+  
+  <%= f.label :no_of_days%>
+  <%= f.text_field :no_of_days %>
+  
+  <%= f.submit :update%>
+<%end%>
